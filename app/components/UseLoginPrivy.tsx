@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useMemo, useEffect } from "react";
-import { useCreateWallet, useLogin, usePrivy, useSendTransaction, WalletWithMetadata } from "@privy-io/react-auth";
+import { useCreateWallet, useLogin, usePrivy, WalletWithMetadata } from "@privy-io/react-auth";
 import { createPublicClient, http, formatEther } from "viem";
 import { monadTestnet } from "viem/chains";
 import { QRCodeSVG } from "qrcode.react";
@@ -12,7 +12,6 @@ const publicClient = createPublicClient({
 });
 
 export default function UseLoginPrivy() {
-  const [userAddress, setUserAddress] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [balance, setBalance] = useState<string | null>(null);
   const [balanceLoading, setBalanceLoading] = useState(false);
@@ -21,8 +20,6 @@ export default function UseLoginPrivy() {
   const { ready, user, logout } = usePrivy();
 
   const { createWallet: createEthereumWallet } = useCreateWallet();
-
-  const { sendTransaction } = useSendTransaction();
 
   const ethereumEmbeddedWallets = useMemo<WalletWithMetadata[]>(
     () =>
@@ -86,13 +83,6 @@ export default function UseLoginPrivy() {
       setIsCreating(false);
     }
   }, [createEthereumWallet]);
-
-  const onSendTransaction = async () => {
-    sendTransaction({
-      to: userAddress || "",
-      value: 100000,
-    });
-  };
 
   const { login } = useLogin();
 
@@ -224,44 +214,6 @@ export default function UseLoginPrivy() {
                     </span>
                   </div>
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* Transaction Section */}
-          {user && (
-            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-slate-200 dark:border-slate-700">
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center">
-                <span className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-3">
-                  💸
-                </span>
-                Send Transaction
-              </h3>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
-                    Recipient Address
-                  </label>
-                  <input
-                    value={userAddress || ""}
-                    onChange={(e) => setUserAddress(e.target.value)}
-                    placeholder="Enter recipient address"
-                    className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all duration-200 font-mono text-sm"
-                  />
-                </div>
-                
-                <button
-                  onClick={onSendTransaction}
-                  disabled={!userAddress}
-                  className={`w-full font-semibold py-3 px-6 rounded-lg transition-colors duration-200 ${
-                    !userAddress 
-                      ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed' 
-                      : 'bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 text-white shadow-md hover:shadow-lg'
-                  }`}
-                >
-                  Send 0.001 MON
-                </button>
               </div>
             </div>
           )}
