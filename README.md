@@ -72,7 +72,7 @@ NEXT_PUBLIC_0X_API_KEY=your_0x_api_key_here
 # Web Push Configuration (Required for notifications)
 NEXT_PUBLIC_VAPID_PUBLIC_KEY=your_vapid_public_key_here
 VAPID_PRIVATE_KEY=your_vapid_private_key_here
-VAPID_SUBJECT=mailto:your-email@example.com
+WEB_PUSH_EMAIL=mailto:your-email@example.com
 ```
 
 > **Important**: Replace all placeholder values with your actual credentials. See the steps below for obtaining these values.
