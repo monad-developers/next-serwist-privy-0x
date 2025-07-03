@@ -202,6 +202,16 @@ export default function PriceView({
               <span className="font-medium">Active:</span>{" "}
               <span className="font-mono">{address}</span>
             </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
+              <a
+                href="https://docs.privy.io/wallets/connectors/ethereum/integrations/wagmi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                Learn more about what Active Wallet means here →
+              </a>
+            </p>
           </div>
 
           {walletsReady && (
