@@ -192,40 +192,40 @@ export default function PriceView({
           Powered by the 0x Protocol
         </p>
       </header>
-
-      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mb-6">
-        <h2 className="text-blue-800 dark:text-blue-200 font-semibold mb-3">
-          Connected Wallets
-        </h2>
-
-        {walletsReady && address && (
-          <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-            <span className="font-medium">Active:</span>{" "}
-            <span className="font-mono">{address}</span>
+      {walletsReady && address && (
+        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mb-6">
+          <div>
+            <h2 className="text-blue-800 dark:text-blue-200 font-semibold mb-3">
+              Connected Wallets
+            </h2>
+            <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+              <span className="font-medium">Active:</span>{" "}
+              <span className="font-mono">{address}</span>
+            </div>
           </div>
-        )}
 
-        {walletsReady && (
-          <div className="space-y-2">
-            {wallets.map((wallet) => (
-              <div
-                key={wallet.address}
-                className="flex items-center justify-between gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg p-3"
-              >
-                <span className="text-gray-900 dark:text-gray-100 font-mono text-sm">
-                  {wallet.address}
-                </span>
-                <button
-                  onClick={() => setActiveWallet(wallet)}
-                  className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white px-3 py-1 rounded text-sm transition-colors"
+          {walletsReady && (
+            <div className="space-y-2">
+              {wallets.map((wallet) => (
+                <div
+                  key={wallet.address}
+                  className="flex items-center justify-between gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg p-3"
                 >
-                  Make Active
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+                  <span className="text-gray-900 dark:text-gray-100 font-mono text-sm">
+                    {wallet.address}
+                  </span>
+                  <button
+                    onClick={() => setActiveWallet(wallet)}
+                    className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white px-3 py-1 rounded text-sm transition-colors"
+                  >
+                    Make Active
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {priceError && (
         <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-4 mb-4">
