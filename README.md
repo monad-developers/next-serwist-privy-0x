@@ -132,6 +132,12 @@ npm run build && npm run start
 
 The app includes web push notification capabilities for user engagement and updates.
 
+## Changing the app name
+
+- Edit the `manifest.json` file
+- Change the `name` and `short_name` fields
+- Run `npm run build` to update the app
+
 ## 🔧 Project Structure
 
 ```
