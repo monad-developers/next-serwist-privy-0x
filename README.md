@@ -64,7 +64,7 @@ Add the following environment variables to your `.env.local` file:
 ```env
 # Privy Configuration (Required)
 NEXT_PUBLIC_PRIVY_APP_ID=your_privy_app_id_here
-NEXT_PUBLIC_PRIVY_CLIENT_ID=your_privy_client_id_here
+NEXT_PUBLIC_PRIVY_CLIENT_ID= # optional, you can leave this empty
 
 # 0x Protocol Configuration (Required for swapping)
 NEXT_PUBLIC_0X_API_KEY=your_0x_api_key_here
@@ -90,7 +90,8 @@ Copy the generated keys to your `.env.local` file.
 ### 5. Get Privy App ID
 
 1. Visit [privy.io](https://privy.io) and create an account
-2. Create a new app and copy your App ID
+2. Create a new app, choose Web as the Platform and create the app
+3. Right after creating the app, copy the App ID
 3. Add the App ID to your `.env.local` file
 
 ### 6. Get 0x API Key
