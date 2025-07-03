@@ -37,8 +37,7 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 git clone <repository-url>
-cd next14-privy-serwist
-git checkout feature/0x-swap-api
+cd next14-privy-serwist-0x
 ```
 
 ### 2. Install Dependencies
