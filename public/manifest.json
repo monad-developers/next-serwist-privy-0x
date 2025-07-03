@@ -1,11 +1,14 @@
 {
-  "name": "Serwist + Next",
-  "short_name": "SerwistNext",
+  "name": "My Awesome PWA App",
+  "short_name": "PWA App",
+  "description": "Best PWA app in the world!",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
   "start_url": "/",
+  "scope": "/",
+  "id": "/",
   "icons": [
     {
       "src": "/icons/android-chrome-192x192.png",
@@ -16,7 +19,8 @@
     {
       "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
