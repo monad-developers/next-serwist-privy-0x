@@ -17,6 +17,7 @@ export default function UseLoginPrivy() {
   const [balance, setBalance] = useState<string | null>(null);
   const [balanceLoading, setBalanceLoading] = useState(false);
   const [balanceError, setBalanceError] = useState(false);
+  const [copied, setCopied] = useState(false);
   const { ready, user, logout } = usePrivy();
 
   const { createWallet: createEthereumWallet } = useCreateWallet();
@@ -54,6 +55,18 @@ export default function UseLoginPrivy() {
       setBalanceError(true);
     } finally {
       setBalanceLoading(false);
+    }
+  }, [walletAddress]);
+
+  const copyToClipboard = useCallback(async () => {
+    if (!walletAddress) return;
+    
+    try {
+      await navigator.clipboard.writeText(walletAddress);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error("Failed to copy address:", error);
     }
   }, [walletAddress]);
 
@@ -151,8 +164,17 @@ export default function UseLoginPrivy() {
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Address</label>
-                  <div className="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-200 break-all">
-                    {walletAddress}
+                  <div className="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-4 flex items-center justify-between gap-3">
+                    <span className="font-mono text-sm text-slate-800 dark:text-slate-200 break-all">
+                      {walletAddress}
+                    </span>
+                    <button
+                      onClick={copyToClipboard}
+                      className="flex-shrink-0 p-2 rounded-md bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 dark:hover:bg-slate-500 text-slate-700 dark:text-slate-300 transition-colors duration-200"
+                      title={copied ? "Copied!" : "Copy address"}
+                    >
+                      {copied ? "✓" : "📋"}
+                    </button>
                   </div>
                   
                   {/* QR Code Section */}
