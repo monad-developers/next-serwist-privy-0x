@@ -87,6 +87,8 @@ export default function QuoteView({
       hash,
     });
 
+
+
   if (!quote) {
     return <div className="text-gray-900 dark:text-white">Getting best quote...</div>;
   }
@@ -186,8 +188,8 @@ export default function QuoteView({
 
       <div className="space-y-3">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full transition-colors"
-          disabled={isPending}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isPending || isConfirming || isConfirmed}
           onClick={async () => {
             console.log("submitting quote to blockchain");
             console.log("to", quote.transaction.to);
@@ -241,7 +243,11 @@ export default function QuoteView({
             });
           }}
         >
-          {isPending ? "Confirming..." : "Place Order"}
+          {isPending 
+            ? "Confirming..." 
+            : isConfirmed 
+            ? "Order Completed ✓" 
+            : "Place Order"}
         </button>
 
         {onClose && (
@@ -260,7 +266,14 @@ export default function QuoteView({
       {isConfirmed && (
         <div className="text-center text-gray-900 dark:text-white mt-4">
           Transaction Confirmed! 🎉{" "}
-          <a href={`https://testnet.monadscan.com/tx/${hash}`} className="text-blue-600 dark:text-blue-400 underline">Check Monadscan</a>
+          <a 
+            href={`https://testnet.monadscan.com/tx/${hash}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-600 dark:text-blue-400 underline"
+          >
+            Check Monadscan
+          </a>
         </div>
       )}
       {error && (
