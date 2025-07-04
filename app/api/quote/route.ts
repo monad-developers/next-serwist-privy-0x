@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     `https://api.0x.org/swap/permit2/quote?${searchParams}`,
     {
       headers: {
-        "0x-api-key": process.env.NEXT_PUBLIC_0X_API_KEY as string,
+        "0x-api-key": process.env.ZEROX_API_KEY as string,
         "0x-version": "v2",
       },
     }
