@@ -32,10 +32,7 @@ export default function QuoteView({
   chainId: number;
   onClose?: () => void;
 }) {
-  const sellTokenInfo = (chainId: number) => {
-    if (chainId === 1) {
-      return MAINNET_TOKENS_BY_ADDRESS[price.sellToken.toLowerCase()];
-    }
+  const sellTokenInfo = () => {
     return MAINNET_TOKENS_BY_ADDRESS[price.sellToken.toLowerCase()];
   };
 
@@ -99,8 +96,6 @@ export default function QuoteView({
   // Helper function to format tax basis points to percentage
   const formatTax = (taxBps: string) => (parseFloat(taxBps) / 100).toFixed(2);
 
-  console.log("AAAAAAAAsellTokenInfo(chainId)", sellTokenInfo(chainId));
-
   return (
     <div className="p-4">
       <form>
@@ -108,19 +103,19 @@ export default function QuoteView({
           <div className="text-xl mb-2 text-gray-900 dark:text-white">You pay</div>
           <div className="flex items-center text-lg sm:text-3xl text-gray-900 dark:text-white">
             <Image
-              alt={sellTokenInfo(chainId).symbol}
+              alt={sellTokenInfo().symbol}
               className="h-9 w-9 mr-2 rounded-md"
-              src={sellTokenInfo(chainId || 1)?.logoURI}
+              src={sellTokenInfo()?.logoURI}
               width={9}
               height={9}
             />
             <span>
               {formatUnits(
                 BigInt(quote.sellAmount),
-                sellTokenInfo(chainId).decimals
+                sellTokenInfo().decimals
               )}
             </span>
-            <div className="ml-2">{sellTokenInfo(chainId).symbol}</div>
+            <div className="ml-2">{sellTokenInfo().symbol}</div>
           </div>
         </div>
 
@@ -179,7 +174,7 @@ export default function QuoteView({
             {quote.tokenMetadata.sellToken.sellTaxBps &&
               quote.tokenMetadata.sellToken.sellTaxBps !== "0" && (
                 <p>
-                  {sellTokenInfo(chainId).symbol +
+                  {sellTokenInfo().symbol +
                     ` Sell Tax: ${formatTax(
                       quote.tokenMetadata.sellToken.sellTaxBps
                     )}%`}

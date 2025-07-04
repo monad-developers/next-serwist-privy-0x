@@ -26,7 +26,7 @@ export default function ApproveButton({
 }: ApproveButtonProps) {
   // Determine the spender from price.issues.allowance
   const spender = price?.issues?.allowance?.spender;
-  const needsApproval = price?.issues?.allowance !== null;
+  const needsApproval = price?.issues?.allowance != null;
 
   // Always call hooks at the top level
   const { data: allowance, refetch } = useReadContract({
@@ -37,7 +37,7 @@ export default function ApproveButton({
     query: { enabled: needsApproval && !!spender },
   });
 
-  const { data } = useSimulateContract({
+  const { data: simulateData } = useSimulateContract({
     address: sellTokenAddress,
     abi: erc20Abi,
     functionName: "approve",
@@ -57,10 +57,10 @@ export default function ApproveButton({
   });
 
   useEffect(() => {
-    if (data) {
+    if (simulateData) {
       refetch();
     }
-  }, [data, refetch]);
+  }, [simulateData, refetch]);
 
   // If price.issues.allowance is null, show the Review Trade button
   if (!needsApproval) {
@@ -68,7 +68,9 @@ export default function ApproveButton({
       <button
         type="button"
         disabled={disabled}
-        onClick={onClick}
+        onClick={() => {
+          onClick();
+        }}
         className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
         aria-label={disabled ? "Insufficient balance to complete trade" : "Review trade details"}
       >
@@ -91,9 +93,11 @@ export default function ApproveButton({
     return (
       <button
         type="button"
-        disabled={isPending || isApproving}
+        disabled={isPending || isApproving || !spender}
         onClick={async () => {
-          if (!spender) return;
+          if (!spender) {
+            return;
+          }
           try {
             await writeContract({
               abi: erc20Abi,
@@ -101,10 +105,9 @@ export default function ApproveButton({
               functionName: "approve",
               args: [spender, MAX_ALLOWANCE],
             });
-            console.log("Approving spender to spend sell token");
             refetch();
-          } catch (err) {
-            console.error("Approval failed:", err);
+          } catch {
+            // Silent error handling
           }
         }}
         className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
@@ -130,6 +133,8 @@ export default function ApproveButton({
             </svg>
             {isApproving ? "Approving..." : "Confirming..."}
           </span>
+        ) : !spender ? (
+          "No Spender Available"
         ) : (
           "Approve"
         )}
@@ -141,7 +146,9 @@ export default function ApproveButton({
     <button
       type="button"
       disabled={disabled}
-      onClick={onClick}
+      onClick={() => {
+        onClick();
+      }}
       className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
       aria-label={disabled ? "Insufficient balance to complete trade" : "Review trade details"}
     >
