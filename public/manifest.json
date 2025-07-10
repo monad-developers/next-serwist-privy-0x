@@ -4,7 +4,7 @@
   "description": "Best PWA app in the world!",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#FFFFFF",
+
   "background_color": "#FFFFFF",
   "start_url": "/",
   "scope": "/",
