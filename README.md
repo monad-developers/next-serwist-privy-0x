@@ -177,6 +177,16 @@ The app includes web push notification capabilities for user engagement and upda
 2. Enable notifications
 3. Check browser notification permissions
 
+### 🔧 Backend Integration Required
+
+> [!NOTE]
+> **The `SendNotification.tsx` component is sample code** that requires backend implementation:
+> 
+> - **Save subscription data** when users subscribe (see TODO comments in code)
+> - **Delete subscription data** when users unsubscribe  
+> - **Implement `/notification` endpoint** to send actual push notifications
+> - **Use `web-push` library** or similar for server-side notification delivery
+
 ## Changing the app name
 
 - Edit the `manifest.json` file
