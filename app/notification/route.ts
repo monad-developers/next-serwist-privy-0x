@@ -21,8 +21,16 @@ export const POST = async (req: NextRequest) => {
     const response = await webPush.sendNotification(
       subscription,
       JSON.stringify({
-        title: "Hello Web Push",
-        message: "Your web push notification is here!",
+        title: "🚀 Test Notification",
+        message: "This is a sample push notification. Customize this content in app/notification/route.ts",
+        icon: "/icon-192x192.png",
+        badge: "/icon-192x192.png",
+        actions: [
+          {
+            action: "open",
+            title: "Open App"
+          }
+        ]
       })
     );
     return new NextResponse(response.body, {

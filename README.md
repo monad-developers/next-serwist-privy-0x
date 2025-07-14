@@ -187,6 +187,10 @@ The app includes web push notification capabilities for user engagement and upda
 > - **Implement `/notification` endpoint** to send actual push notifications
 > - **Use `web-push` library** or similar for server-side notification delivery
 
+### 🎨 Customizing Notification Content
+
+To customize your push notification content, edit `app/notification/route.ts` and modify the `title`, `message`, `icon`, and other properties in the `sendNotification` call.
+
 ## Changing the app name
 
 - Edit the `manifest.json` file
