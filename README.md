@@ -131,6 +131,52 @@ npm run build && npm run start
 
 The app includes web push notification capabilities for user engagement and updates.
 
+## 🔔 Notification Setup
+
+> [!IMPORTANT]
+> **Enable notifications for the best experience!**
+> 
+> To receive push notifications from this app, you need to enable notifications in your browser and/or system settings:
+
+### Browser Settings
+
+**Chrome/Edge:**
+1. Click the lock icon 🔒 in the address bar
+2. Set "Notifications" to "Allow"
+3. Or go to Settings → Privacy and security → Site Settings → Notifications
+
+**Firefox:**
+1. Click the shield icon 🛡️ in the address bar
+2. Turn off "Enhanced Tracking Protection" for this site (if needed)
+3. Allow notifications when prompted
+4. Or go to Settings → Privacy & Security → Permissions → Notifications
+
+**Safari:**
+1. Go to Safari → Settings → Websites → Notifications
+2. Find your site and set it to "Allow"
+
+### System Settings
+
+**macOS:**
+1. System Preferences → Notifications & Focus
+2. Find your browser and ensure notifications are enabled
+3. Check "Allow notifications from websites" in browser settings
+
+**Windows:**
+1. Settings → System → Notifications & actions
+2. Ensure your browser can send notifications
+3. Check browser notification settings
+
+**iOS:**
+1. Settings → Notifications → [Your Browser]
+2. Enable "Allow Notifications"
+3. Also enable in browser settings
+
+**Android:**
+1. Settings → Apps → [Your Browser] → Notifications
+2. Enable notifications
+3. Check browser notification permissions
+
 ## Changing the app name
 
 - Edit the `manifest.json` file
