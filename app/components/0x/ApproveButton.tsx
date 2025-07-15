@@ -15,6 +15,8 @@ interface ApproveButtonProps {
   sellTokenAddress: Address;
   disabled?: boolean;
   price: ExtendedPriceResponse | null;
+  hasValidAmount?: boolean;
+  insufficientBalance?: boolean;
 }
 
 export default function ApproveButton({
@@ -23,6 +25,8 @@ export default function ApproveButton({
   sellTokenAddress,
   disabled = false,
   price,
+  hasValidAmount = true,
+  insufficientBalance = false,
 }: ApproveButtonProps) {
   // Determine the spender from price.issues.allowance
   const spender = price?.issues?.allowance?.spender;
@@ -64,6 +68,18 @@ export default function ApproveButton({
 
   // If price.issues.allowance is null, show the Review Trade button
   if (!needsApproval) {
+    const getButtonText = () => {
+      if (!hasValidAmount) return "Enter Amount";
+      if (insufficientBalance) return "Insufficient Balance";
+      return "Review Trade";
+    };
+
+    const getAriaLabel = () => {
+      if (!hasValidAmount) return "Enter an amount to continue";
+      if (insufficientBalance) return "Insufficient balance to complete trade";
+      return "Review trade details";
+    };
+
     return (
       <button
         type="button"
@@ -72,9 +88,9 @@ export default function ApproveButton({
           onClick();
         }}
         className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
-        aria-label={disabled ? "Insufficient balance to complete trade" : "Review trade details"}
+        aria-label={getAriaLabel()}
       >
-        {disabled ? "Insufficient Balance" : "Review Trade"}
+        {getButtonText()}
       </button>
     );
   }

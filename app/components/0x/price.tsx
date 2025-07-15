@@ -161,7 +161,7 @@ export default function PriceView({
   });
 
   const insufficientBalance = useMemo(() => {
-    if (!sellTokenBalance || !sellAmount) return true;
+    if (!sellTokenBalance || !sellAmount || sellAmount === "") return false;
     try {
       return (
         parseUnits(sellAmount, sellTokenObject.decimals) >
@@ -171,6 +171,8 @@ export default function PriceView({
       return true;
     }
   }, [sellTokenBalance, sellAmount, sellTokenObject.decimals]);
+
+  const hasValidAmount = !!(sellAmount && sellAmount !== "" && parseFloat(sellAmount) > 0);
 
   const formatTax = (taxBps: string) => (parseFloat(taxBps) / 100).toFixed(2);
 
@@ -354,8 +356,10 @@ export default function PriceView({
             sellTokenAddress={sellTokenObject.address}
             taker={taker}
             onClick={() => setFinalize(true)}
-            disabled={insufficientBalance || !fetchedPrice}
+            disabled={!hasValidAmount || insufficientBalance || !fetchedPrice}
             price={fetchedPrice}
+            hasValidAmount={hasValidAmount}
+            insufficientBalance={insufficientBalance}
           />
         ) : (
           <button
