@@ -106,30 +106,9 @@ export default function ApproveButton({
   }
 
   if (allowance === BigInt(0) || !allowance) {
-    return (
-      <button
-        type="button"
-        disabled={isPending || isApproving || !spender}
-        onClick={async () => {
-          if (!spender) {
-            return;
-          }
-          try {
-            await writeContract({
-              abi: erc20Abi,
-              address: sellTokenAddress,
-              functionName: "approve",
-              args: [spender, MAX_ALLOWANCE],
-            });
-            refetch();
-          } catch {
-            // Silent error handling
-          }
-        }}
-        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
-        aria-label="Approve token spending"
-      >
-        {isPending || isApproving ? (
+    const getButtonText = () => {
+      if (isPending || isApproving) {
+        return (
           <span className="flex items-center justify-center gap-2">
             <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
               <circle
@@ -149,11 +128,43 @@ export default function ApproveButton({
             </svg>
             {isApproving ? "Approving..." : "Confirming..."}
           </span>
-        ) : !spender ? (
-          "No Spender Available"
-        ) : (
-          "Approve"
-        )}
+        );
+      }
+      if (insufficientBalance) return "Insufficient Balance";
+      if (!spender) return "No Spender Available";
+      return "Approve";
+    };
+
+    const getAriaLabel = () => {
+      if (insufficientBalance) return "Insufficient balance to complete trade";
+      if (!spender) return "No spender available";
+      return "Approve token spending";
+    };
+
+    return (
+      <button
+        type="button"
+        disabled={isPending || isApproving || !spender || insufficientBalance}
+        onClick={async () => {
+          if (!spender) {
+            return;
+          }
+          try {
+            await writeContract({
+              abi: erc20Abi,
+              address: sellTokenAddress,
+              functionName: "approve",
+              args: [spender, MAX_ALLOWANCE],
+            });
+            refetch();
+          } catch {
+            // Silent error handling
+          }
+        }}
+        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+        aria-label={getAriaLabel()}
+      >
+        {getButtonText()}
       </button>
     );
   }
