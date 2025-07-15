@@ -17,6 +17,8 @@ const base64ToUint8Array = (base64: string) => {
 
 export default function SendNotification() {
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [isUnsubscribing, setIsUnsubscribing] = useState(false);
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null
   );
@@ -59,17 +61,26 @@ export default function SendNotification() {
       return;
     }
     event.preventDefault();
-    const sub = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: base64ToUint8Array(
-        process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY
-      ),
-    });
-    // TODO: you should call your API to save subscription data on the server in order to send web push notification from the server
-    setSubscription(sub);
-    setIsSubscribed(true);
-    alert("Web push subscribed!");
-    console.log(sub);
+    
+    setIsSubscribing(true);
+    try {
+      const sub = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: base64ToUint8Array(
+          process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY
+        ),
+      });
+      // TODO: you should call your API to save subscription data on the server in order to send web push notification from the server
+      setSubscription(sub);
+      setIsSubscribed(true);
+      alert("Web push subscribed!");
+      console.log(sub);
+    } catch (error) {
+      console.error("Failed to subscribe:", error);
+      alert("Failed to subscribe to notifications");
+    } finally {
+      setIsSubscribing(false);
+    }
   };
 
   const unsubscribeButtonOnClick: MouseEventHandler<HTMLButtonElement> = async (
@@ -80,11 +91,20 @@ export default function SendNotification() {
       return;
     }
     event.preventDefault();
-    await subscription.unsubscribe();
-    // TODO: you should call your API to delete or invalidate subscription data on the server
-    setSubscription(null);
-    setIsSubscribed(false);
-    console.log("Web push unsubscribed!");
+    
+    setIsUnsubscribing(true);
+    try {
+      await subscription.unsubscribe();
+      // TODO: you should call your API to delete or invalidate subscription data on the server
+      setSubscription(null);
+      setIsSubscribed(false);
+      console.log("Web push unsubscribed!");
+    } catch (error) {
+      console.error("Failed to unsubscribe:", error);
+      alert("Failed to unsubscribe from notifications");
+    } finally {
+      setIsUnsubscribing(false);
+    }
   };
 
   const sendNotificationButtonOnClick: MouseEventHandler<
@@ -143,27 +163,49 @@ export default function SendNotification() {
           <button
             type="button"
             onClick={subscribeButtonOnClick}
-            disabled={isSubscribed}
-            className={`flex-1 font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-md ${
-              isSubscribed
+            disabled={isSubscribed || isSubscribing}
+            className={`flex-1 font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-md flex items-center justify-center ${
+              isSubscribed || isSubscribing
                 ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
                 : 'bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 text-white hover:shadow-lg'
             }`}
           >
-            {isSubscribed ? '✓ Subscribed' : 'Subscribe to Notifications'}
+            {isSubscribing ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Subscribing...
+              </>
+            ) : isSubscribed ? (
+              '✓ Subscribed'
+            ) : (
+              'Subscribe to Notifications'
+            )}
           </button>
           
           <button
             type="button"
             onClick={unsubscribeButtonOnClick}
-            disabled={!isSubscribed}
-            className={`flex-1 font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-md ${
-              !isSubscribed
+            disabled={!isSubscribed || isUnsubscribing}
+            className={`flex-1 font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-md flex items-center justify-center ${
+              !isSubscribed || isUnsubscribing
                 ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
                 : 'bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600 text-white hover:shadow-lg'
             }`}
           >
-            Unsubscribe
+            {isUnsubscribing ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Unsubscribing...
+              </>
+            ) : (
+              'Unsubscribe'
+            )}
           </button>
         </div>
         
