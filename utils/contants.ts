@@ -36,7 +36,7 @@ export const MAINNET_TOKENS: Token[] = [
     decimals: 6,
     address: "0xfBC2D240A5eD44231AcA3A9e9066bc4b33f01149",
     logoURI:
-      "https://testnet.monadexplorer.com/images/token/token-default.svg",
+      "https://imagedelivery.net/cBNDGgkrsEA-b_ixIp9SkQ/images.png/public",
   },
 ];
 
@@ -57,7 +57,7 @@ export const MAINNET_TOKENS_BY_SYMBOL: Record<string, Token> = {
     decimals: 6,
     address: "0xfBC2D240A5eD44231AcA3A9e9066bc4b33f01149",
     logoURI:
-      "https://testnet.monadexplorer.com/images/token/token-default.svg",
+      "https://imagedelivery.net/cBNDGgkrsEA-b_ixIp9SkQ/images.png/public",
   },
 };
 
@@ -78,6 +78,6 @@ export const MAINNET_TOKENS_BY_ADDRESS: Record<string, Token> = {
     decimals: 6,
     address: "0xfBC2D240A5eD44231AcA3A9e9066bc4b33f01149",
     logoURI:
-      "https://testnet.monadexplorer.com/images/token/token-default.svg",
+      "https://imagedelivery.net/cBNDGgkrsEA-b_ixIp9SkQ/images.png/public",
   },
 };
