@@ -61,7 +61,7 @@ touch .env.local
 Add the following environment variables to your `.env.local` file:
 
 ```env
-# Privy 
+# Privy
 NEXT_PUBLIC_PRIVY_APP_ID=your_privy_app_id_here
 NEXT_PUBLIC_PRIVY_CLIENT_ID= # optional, you can leave this empty
 
@@ -91,7 +91,7 @@ Copy the generated keys to your `.env.local` file.
 1. Visit [privy.io](https://privy.io) and create an account
 2. Create a new app, choose Web as the Platform and create the app
 3. Right after creating the app, copy the App ID
-3. Add the App ID to your `.env.local` file
+4. Add the App ID to your `.env.local` file
 
 ### 6. Get 0x API Key
 
@@ -133,57 +133,62 @@ The app includes web push notification capabilities for user engagement and upda
 
 ## 🔔 Notification Setup
 
-> [!IMPORTANT]
-> **Enable notifications for the best experience!**
-> 
+> [!IMPORTANT] > **Enable notifications for the best experience!**
+>
 > To receive push notifications from this app, you need to enable notifications in your browser and/or system settings:
 
 ### Browser Settings
 
 **Chrome/Edge:**
+
 1. Click the lock icon 🔒 in the address bar
 2. Set "Notifications" to "Allow"
 3. Or go to Settings → Privacy and security → Site Settings → Notifications
 
 **Firefox:**
+
 1. Click the shield icon 🛡️ in the address bar
 2. Turn off "Enhanced Tracking Protection" for this site (if needed)
 3. Allow notifications when prompted
 4. Or go to Settings → Privacy & Security → Permissions → Notifications
 
 **Safari:**
+
 1. Go to Safari → Settings → Websites → Notifications
 2. Find your site and set it to "Allow"
 
 ### System Settings
 
 **macOS:**
+
 1. System Preferences → Notifications & Focus
 2. Find your browser and ensure notifications are enabled
 3. Check "Allow notifications from websites" in browser settings
 
 **Windows:**
+
 1. Settings → System → Notifications & actions
 2. Ensure your browser can send notifications
 3. Check browser notification settings
 
 **iOS:**
+
 1. Settings → Notifications → [Your Browser]
 2. Enable "Allow Notifications"
 3. Also enable in browser settings
 
 **Android:**
+
 1. Settings → Apps → [Your Browser] → Notifications
 2. Enable notifications
 3. Check browser notification permissions
 
 ### 🔧 Backend Integration Required
 
-> [!NOTE]
-> **The `SendNotification.tsx` component is sample code** that requires backend implementation:
-> 
+> [!NOTE] > **The `SendNotification.tsx` component is sample code** that requires backend implementation:
+>
 > - **Save subscription data** when users subscribe (see TODO comments in code)
-> - **Delete subscription data** when users unsubscribe  
+> - **Delete subscription data** when users unsubscribe
 > - **Implement `/notification` endpoint** to send actual push notifications
 > - **Use `web-push` library** or similar for server-side notification delivery
 
@@ -232,6 +237,132 @@ The app integrates with:
 - **0x Protocol**: For decentralized token swapping
 - **Privy**: For Web3 authentication
 - **Web Push API**: For notifications
+
+## 🪙 Adding More Tokens
+
+The template currently supports WMON and USDT tokens. To add more tokens for trading, follow these steps:
+
+### 1. Find Token Information
+
+Before adding a token, you'll need the following information:
+
+- **Contract Address**: The token's smart contract address
+- **Symbol**: The token's symbol (e.g., "ETH", "USDC")
+- **Name**: The full name of the token
+- **Decimals**: Number of decimal places (usually 18 for most ERC-20 tokens)
+- **Logo URI**: URL to the token's logo image
+
+You can find this information on the DEXes that 0x Swap API supports.
+
+To get the DEXes that 0x Swap API supports, you can query the https://api.0x.org/sources endpoint. For reference, see https://0x.org/docs/api#tag/Sources/operation/sources::getSources page.
+
+### 2. Update Token Constants
+
+Edit `utils/contants.ts` and add your new token to three places:
+
+#### A. Add to MAINNET_TOKENS array
+
+```typescript
+export const MAINNET_TOKENS: Token[] = [
+  // ... existing tokens ...
+  {
+    chainId: 1,
+    name: "Your Token Name",
+    symbol: "YOUR_SYMBOL",
+    decimals: 18,
+    address: "0xYourTokenContractAddress",
+    logoURI: "https://your-token-logo-url.png",
+  },
+];
+```
+
+#### B. Add to MAINNET_TOKENS_BY_SYMBOL record
+
+```typescript
+export const MAINNET_TOKENS_BY_SYMBOL: Record<string, Token> = {
+  // ... existing tokens ...
+  your_symbol: {
+    // lowercase key
+    chainId: 1,
+    name: "Your Token Name",
+    symbol: "YOUR_SYMBOL",
+    decimals: 18,
+    address: "0xYourTokenContractAddress",
+    logoURI: "https://your-token-logo-url.png",
+  },
+};
+```
+
+#### C. Add to MAINNET_TOKENS_BY_ADDRESS record
+
+```typescript
+export const MAINNET_TOKENS_BY_ADDRESS: Record<string, Token> = {
+  // ... existing tokens ...
+  "0xyourtokencontractaddress": {
+    // lowercase address
+    chainId: 1,
+    name: "Your Token Name",
+    symbol: "YOUR_SYMBOL",
+    decimals: 18,
+    address: "0xYourTokenContractAddress", // original case
+    logoURI: "https://your-token-logo-url.png",
+  },
+};
+```
+
+### 3. Example: Adding shMON
+
+Here's a complete example of adding USDC:
+
+```typescript
+// In MAINNET_TOKENS array
+{
+  chainId: 1,
+  name: "shMonad",
+  symbol: "shMON",
+  decimals: 18,
+  address: "0x3a98250F98Dd388C211206983453837C8365BDc1",
+  logoURI: "put_your_logo_url_here_or_use_the_default_logo",
+},
+
+// In MAINNET_TOKENS_BY_SYMBOL record
+shmon: {
+  chainId: 1,
+  name: "shMonad",
+  symbol: "shMON",
+  decimals: 18,
+  address: "0x3a98250F98Dd388C211206983453837C8365BDc1",
+  logoURI: "put_your_logo_url_here_or_use_the_default_logo",
+},
+
+// In MAINNET_TOKENS_BY_ADDRESS record
+"0x3a98250F98Dd388C211206983453837C8365BDc1": {
+  chainId: 1,
+  name: "shMonad",
+  symbol: "shMON",
+  decimals: 18,
+  address: "0x3a98250F98Dd388C211206983453837C8365BDc1",
+  logoURI: "put_your_logo_url_here_or_use_the_default_logo",
+},
+```
+
+### 4. Important Notes
+
+- **Decimals**: Most tokens use 18 decimals, but some (like USDT, USDC) use 6
+- **Logo URLs**: Use permanent, reliable image URLs. Consider hosting logos yourself for better reliability
+- **Testing**: Test thoroughly with small amounts before using in production
+- **0x Protocol Support**: Ensure the token is supported by 0x Protocol for your target network
+
+### 5. Rebuild and Test
+
+After adding tokens:
+
+```bash
+npm run build
+npm run start
+```
+
+The new tokens will automatically appear in the token selector dropdowns in the swap interface.
 
 ## 🤝 Contributing
 
