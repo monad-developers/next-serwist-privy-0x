@@ -364,6 +364,86 @@ npm run start
 
 The new tokens will automatically appear in the token selector dropdowns in the swap interface.
 
+## 🎛️ Configuring Slippage Tolerance
+
+Slippage tolerance determines how much price movement you're willing to accept during a trade. The app currently uses the 0x API's default slippage tolerance of 1% (100 basis points).
+
+### Adding Slippage Configuration
+
+#### 1. Update Constants
+
+Add slippage options to `utils/contants.ts`:
+
+```typescript
+export const DEFAULT_SLIPPAGE_BPS = 100; // 1% in basis points
+
+export const SLIPPAGE_OPTIONS = [
+  { label: "0.1%", value: 10 },
+  { label: "0.5%", value: 50 },
+  { label: "1%", value: 100 },
+  { label: "2%", value: 200 },
+  { label: "3%", value: 300 },
+];
+```
+
+#### 2. Update API Routes
+
+Add `slippageBps` parameter to both API routes:
+
+**`app/api/price/route.ts` and `app/api/quote/route.ts`:**
+
+```typescript
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  
+  // Add default slippage if not provided
+  if (!searchParams.has('slippageBps')) {
+    searchParams.set('slippageBps', '100'); // 1% default
+  }
+
+  const res = await fetch(
+    `https://api.0x.org/swap/permit2/price?${searchParams}`, // or /quote
+    {
+      headers: {
+        "0x-api-key": process.env.ZEROX_API_KEY as string,
+        "0x-version": "v2",
+      },
+    }
+  );
+  const data = await res.json();
+  return Response.json(data);
+}
+```
+
+#### 3. Add Slippage to Components
+
+Update the price/quote requests to include `slippageBps` parameter:
+
+**In `app/components/0x/price.tsx`:**
+
+```typescript
+const [slippageBps, setSlippageBps] = useState(DEFAULT_SLIPPAGE_BPS);
+
+// Add slippageBps to your API request parameters
+const priceRequest = useMemo(() => ({
+  chainId,
+  sellToken: sellTokenObject.address,
+  buyToken: buyTokenObject.address,
+  sellAmount: parsedSellAmount,
+  taker,
+  slippageBps, // Add this
+  // ... other params
+}), [...dependencies, slippageBps]);
+```
+
+### Slippage Parameter Details
+
+- **Range**: 0-10000 basis points (0%-100%)
+- **Default**: 100 (1%)
+- **Format**: Basis points (100 bps = 1%)
+
+Reference: [0x API Documentation](https://0x.org/docs/api#tag/Swap/operation/swap::permit2::getPrice)
+
 ## 🤝 Contributing
 
 1. Fork the repository
