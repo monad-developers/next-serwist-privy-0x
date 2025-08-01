@@ -260,10 +260,10 @@ To get the DEXes that 0x Swap API supports, you can query the https://api.0x.org
 
 Edit `utils/contants.ts` and add your new token to three places:
 
-#### A. Add to MAINNET_TOKENS array
+#### A. Add to MONAD_TESTNET_TOKENS array
 
 ```typescript
-export const MAINNET_TOKENS: Token[] = [
+export const MONAD_TESTNET_TOKENS: Token[] = [
   // ... existing tokens ...
   {
     chainId: 1,
@@ -276,10 +276,10 @@ export const MAINNET_TOKENS: Token[] = [
 ];
 ```
 
-#### B. Add to MAINNET_TOKENS_BY_SYMBOL record
+#### B. Add to MONAD_TESTNET_TOKENS_BY_SYMBOL record
 
 ```typescript
-export const MAINNET_TOKENS_BY_SYMBOL: Record<string, Token> = {
+export const MONAD_TESTNET_TOKENS_BY_SYMBOL: Record<string, Token> = {
   // ... existing tokens ...
   your_symbol: {
     // lowercase key
@@ -293,10 +293,10 @@ export const MAINNET_TOKENS_BY_SYMBOL: Record<string, Token> = {
 };
 ```
 
-#### C. Add to MAINNET_TOKENS_BY_ADDRESS record
+#### C. Add to MONAD_TESTNET_TOKENS_BY_ADDRESS record
 
 ```typescript
-export const MAINNET_TOKENS_BY_ADDRESS: Record<string, Token> = {
+export const MONAD_TESTNET_TOKENS_BY_ADDRESS: Record<string, Token> = {
   // ... existing tokens ...
   "0xyourtokencontractaddress": {
     // lowercase address
@@ -315,7 +315,7 @@ export const MAINNET_TOKENS_BY_ADDRESS: Record<string, Token> = {
 Here's a complete example of adding USDC:
 
 ```typescript
-// In MAINNET_TOKENS array
+// In MONAD_TESTNET_TOKENS array
 {
   chainId: 1,
   name: "shMonad",
@@ -325,7 +325,7 @@ Here's a complete example of adding USDC:
   logoURI: "put_your_logo_url_here_or_use_the_default_logo",
 },
 
-// In MAINNET_TOKENS_BY_SYMBOL record
+// In MONAD_TESTNET_TOKENS_BY_SYMBOL record
 shmon: {
   chainId: 1,
   name: "shMonad",
@@ -335,7 +335,7 @@ shmon: {
   logoURI: "put_your_logo_url_here_or_use_the_default_logo",
 },
 
-// In MAINNET_TOKENS_BY_ADDRESS record
+// In MONAD_TESTNET_TOKENS_BY_ADDRESS record
 "0x3a98250F98Dd388C211206983453837C8365BDc1": {
   chainId: 1,
   name: "shMonad",

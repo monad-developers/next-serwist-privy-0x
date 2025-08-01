@@ -10,7 +10,7 @@ import {
 import { Address, concat, numberToHex, size, type Hex } from "viem";
 import type { PriceResponse, QuoteResponse } from "@/utils/types";
 import {
-  MAINNET_TOKENS_BY_ADDRESS,
+  MONAD_TESTNET_TOKENS_BY_ADDRESS,
   AFFILIATE_FEE,
   FEE_RECIPIENT,
 } from "@/utils/contants";
@@ -33,14 +33,14 @@ export default function QuoteView({
   onClose?: () => void;
 }) {
   const sellTokenInfo = () => {
-    return MAINNET_TOKENS_BY_ADDRESS[price.sellToken.toLowerCase()];
+    return MONAD_TESTNET_TOKENS_BY_ADDRESS[price.sellToken.toLowerCase()];
   };
 
   const buyTokenInfo = (chainId: number) => {
     if (chainId === 1) {
-      return MAINNET_TOKENS_BY_ADDRESS[price.buyToken.toLowerCase()];
+      return MONAD_TESTNET_TOKENS_BY_ADDRESS[price.buyToken.toLowerCase()];
     }
-    return MAINNET_TOKENS_BY_ADDRESS[price.buyToken.toLowerCase()];
+    return MONAD_TESTNET_TOKENS_BY_ADDRESS[price.buyToken.toLowerCase()];
   };
 
   const { signTypedDataAsync } = useSignTypedData();
@@ -126,11 +126,11 @@ export default function QuoteView({
           <div className="flex items-center text-lg sm:text-3xl text-gray-900 dark:text-white">
             <Image
               alt={
-                MAINNET_TOKENS_BY_ADDRESS[price.buyToken.toLowerCase()].symbol
+                MONAD_TESTNET_TOKENS_BY_ADDRESS[price.buyToken.toLowerCase()].symbol
               }
               className="h-9 w-9 mr-2 rounded-md"
               src={
-                MAINNET_TOKENS_BY_ADDRESS[price.buyToken.toLowerCase()].logoURI
+                MONAD_TESTNET_TOKENS_BY_ADDRESS[price.buyToken.toLowerCase()].logoURI
               }
               width={9}
               height={9}

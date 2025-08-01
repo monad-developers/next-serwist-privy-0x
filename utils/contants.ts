@@ -19,7 +19,7 @@ export const DEBOUNCE_DELAY = 500; // ms
 export const MIN_TRADE_AMOUNT = "0.001";
 export const DEFAULT_SLIPPAGE = 0.01; // 1%
 
-export const MAINNET_TOKENS: Token[] = [
+export const MONAD_TESTNET_TOKENS: Token[] = [
   {
     chainId: 1,
     name: "Wrapped MON",
@@ -40,7 +40,7 @@ export const MAINNET_TOKENS: Token[] = [
   },
 ];
 
-export const MAINNET_TOKENS_BY_SYMBOL: Record<string, Token> = {
+export const MONAD_TESTNET_TOKENS_BY_SYMBOL: Record<string, Token> = {
   wmon: {
     chainId: 1,
     name: "Wrapped MON",
@@ -61,7 +61,7 @@ export const MAINNET_TOKENS_BY_SYMBOL: Record<string, Token> = {
   },
 };
 
-export const MAINNET_TOKENS_BY_ADDRESS: Record<string, Token> = {
+export const MONAD_TESTNET_TOKENS_BY_ADDRESS: Record<string, Token> = {
   "0x760afe86e5de5fa0ee542fc7b7b713e1c5425701": {
     chainId: 1,
     name: "Wrapped MON",

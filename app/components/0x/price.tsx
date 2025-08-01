@@ -3,8 +3,8 @@ import { useState, useMemo, useCallback } from "react";
 import { formatUnits, parseUnits, Address } from "viem";
 import { useBalance, useAccount } from "wagmi";
 import {
-  MAINNET_TOKENS,
-  MAINNET_TOKENS_BY_SYMBOL,
+  MONAD_TESTNET_TOKENS,
+  MONAD_TESTNET_TOKENS_BY_SYMBOL,
   AFFILIATE_FEE,
   FEE_RECIPIENT,
   MIN_TRADE_AMOUNT,
@@ -85,9 +85,9 @@ export default function PriceView({
 
   const tokensByChain = useMemo(() => {
     if (chainId === 1) {
-      return MAINNET_TOKENS_BY_SYMBOL;
+      return MONAD_TESTNET_TOKENS_BY_SYMBOL;
     }
-    return MAINNET_TOKENS_BY_SYMBOL;
+    return MONAD_TESTNET_TOKENS_BY_SYMBOL;
   }, [chainId]);
 
   const sellTokenObject = tokensByChain[sellToken];
@@ -264,7 +264,7 @@ export default function PriceView({
       <div className="space-y-4 mb-6">
         <TokenSelector
           selectedToken={sellToken}
-          tokens={MAINNET_TOKENS}
+          tokens={MONAD_TESTNET_TOKENS}
           onTokenChange={handleSellTokenChange}
           label="Sell"
           amount={sellAmount}
@@ -291,7 +291,7 @@ export default function PriceView({
 
         <TokenSelector
           selectedToken={buyToken}
-          tokens={MAINNET_TOKENS}
+          tokens={MONAD_TESTNET_TOKENS}
           onTokenChange={handleBuyTokenChange}
           label="Buy"
           amount={buyAmount}
