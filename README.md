@@ -36,8 +36,8 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd next14-privy-serwist-0x
+git clone https://github.com/monad-developers/next-serwist-privy-0x.git
+cd next-serwist-privy-0x
 ```
 
 ### 2. Install Dependencies
@@ -205,7 +205,7 @@ To customize your push notification content, edit `app/notification/route.ts` an
 ## 🔧 Project Structure
 
 ```
-next14-privy-serwist/
+next-serwist-privy-0x/
 ├── app/
 │   ├── components/          # React components
 │   │   ├── 0x/             # 0x Protocol integration
