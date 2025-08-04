@@ -7,9 +7,6 @@ export const MAGIC_CALLDATA_STRING = "f".repeat(130); // used when signing the e
 export const AFFILIATE_FEE = 100; // 1% affiliate fee. Denoted in Bps.
 export const FEE_RECIPIENT = "0x75A94931B81d81C7a62b76DC0FcFAC77FbE1e917"; // The ETH address that should receive affiliate fees
 
-export const MAINNET_EXCHANGE_PROXY =
-  "0xdef1c0ded9bec7f1a1670819833240f027b25eff";
-
 export const MAX_ALLOWANCE = BigInt(
   "115792089237316195423570985008687907853269984665640564039457584007913129639935"
 );
