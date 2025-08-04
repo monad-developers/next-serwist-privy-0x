@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import qs from "qs";
 import { PriceRequest, ExtendedPriceResponse, ValidationError } from "@/utils/types";
-import { DEBOUNCE_DELAY } from "@/utils/contants";
+import { DEBOUNCE_DELAY } from "@/utils/constants";
 
 interface UsePriceFetcherProps {
   enabled: boolean;
