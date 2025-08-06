@@ -6,7 +6,7 @@ import {
   useWriteContract,
   useWaitForTransactionReceipt,
 } from "wagmi";
-import { MAX_ALLOWANCE } from "@/utils/contants";
+import { MAX_ALLOWANCE } from "@/utils/constants";
 import { ExtendedPriceResponse } from "@/utils/types";
 
 interface ApproveButtonProps {

@@ -13,7 +13,7 @@ import {
   MONAD_TESTNET_TOKENS_BY_ADDRESS,
   AFFILIATE_FEE,
   FEE_RECIPIENT,
-} from "@/utils/contants";
+} from "@/utils/constants";
 import qs from "qs";
 import Image from "next/image";
 

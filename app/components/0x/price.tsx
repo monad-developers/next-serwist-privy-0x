@@ -8,7 +8,7 @@ import {
   AFFILIATE_FEE,
   FEE_RECIPIENT,
   MIN_TRADE_AMOUNT,
-} from "@/utils/contants";
+} from "@/utils/constants";
 import {
   ExtendedPriceResponse,
   TradeDirection,
